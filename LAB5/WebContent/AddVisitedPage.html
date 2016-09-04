@@ -1,0 +1,134 @@
+<html>
+<head>
+<meta charset="ISO-8859-1">
+
+<style>
+
+body {background-color: #4A4444}
+h3 {color: #ffffff}
+p {color: #BA9BCE}
+
+#theForm {
+	text-align: center;
+}
+
+#home a:link { color: #88D6F0; }
+#home a:visited { color: #70DB93; }
+#home a:hover { color: #88D6F0; }
+#home a:active { color: #7F7BF1; }
+#home {
+	font-weight: bold;
+	text-align: center;
+
+}
+
+#submit { 
+	color: #AFD0D7; 
+	background: #606C75;
+	width: 120px;
+	font-weight: bold;
+	margin-left: 28em;
+}
+
+#errorMessage {
+	color: red;
+	font-style: italic;
+	text-align: center;
+	 font-family: "Verdana";
+}
+
+#tField {
+	width: 250px;
+	color: #D5CFE7; 
+	background: #606C75;
+	text-align: center;
+	margin-left: 2em;
+}
+
+#errorMessage a:link { color: #6BD585; }
+#errorMessage a:visited { color: #70DB93; }
+#errorMessage a:hover { color: #88D6F0; }
+#errorMessage a:active { color: #70DB93; }
+
+</style>
+
+
+<script type="text/javascript" src="js/jquery-2.1.3.js"></script>
+<script type="text/javascript">
+	
+	
+$(document).ready(function() {
+	
+	$('#submit').click(function(){
+		
+		// Submit the form input to the server 
+		$.post("rest/add", $('form').serialize(), function(errMessage) {
+			
+			// Get the results of the search from the server
+			$.get("rest/add" , function(){
+				
+				// Display the error message or success message
+				$("#errorMessage").html( errMessage + "<br> <br>" );
+			
+			});//GET
+			return false;
+
+			// Empty the container before displaying new results
+			('#errorMessage').empty();
+	
+			
+		});// POST
+		// Reset form after user clicks submit
+		document.getElementById("myForm").reset();
+		
+		// Blocks redirecting in order to dispaly error message from the server(AggiungiLuogoVisitati.java)
+		return false;
+		
+	});// Search
+
+
+});// Document ready
+	
+</script>
+
+<title>Aggiungi ai luoghi visitati</title>
+
+</head>
+<body>
+
+<br>
+<center><font size = "3" color = "#AFD0D7" face = "verdana"> Compila i seguenti campi per aggiungere il luogo ai visitati</font></center>
+<br>
+ 
+ <div id = "theForm">
+ 
+ 	<form method="POST" action="./rest/add" id = "myForm">	
+		<font size = "4" color = "#AFD0D7"><b>Data:</b> </font>
+		&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+		&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+		<input type="text" name="date" id = "tfield" value = "dd/MM/yyyy" color ="#AAAAAA">
+		<br>
+		<font size = "4" color = "#AFD0D7"><b>Punteggio:</b> </font>
+		&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+		&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+		<input type="text" name="points" id = "tfield" value = "10" color ="#AAAAAA">
+		<br>
+		<font size = "4" color = "#AFD0D7"><b>Affollamento:</b> </font> 
+		&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+		&nbsp&nbsp 
+		<input type="text" name="crowd" id = "tfield" value = "10" color ="#AAAAAA">
+		<br>
+		<font size = "4" color = "#AFD0D7"><b>Facilità di raggiungimento:</b> </font> &nbsp 
+		<input type="ease" name="ease" id = "tfield" value = "10" color ="#AAAAAA">
+			<br>
+			<br>
+		    <input type="submit" value="Submit" id="submit">
+	</form>
+ 
+ </div>
+ <br>
+ 
+ <div id = "errorMessage"> </div> 
+ 
+</body>
+</html>
